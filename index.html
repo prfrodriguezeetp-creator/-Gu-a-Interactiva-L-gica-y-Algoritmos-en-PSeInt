@@ -151,7 +151,7 @@
   <div class="card theory">
     <h2>📊 Módulo 2 — Vectores (Arreglos)</h2>
     <p>Un <b>vector</b> es una caja con varios compartimentos numerados que guardan datos del mismo tipo bajo un solo nombre. Se accede a cada posición con un índice: <span class="fn">vector[1]</span>, <span class="fn">vector[2]</span>, etc.</p>
-    <p>En PSeInt se declaran con <span class="kw">Dimension</span>. Los índices comienzan en <b>1</b>. La gran ventaja: recorrer todas las posiciones con un solo bucle <span class="kw">Para</span>.</p>
+    <p>En PSeInt se declaran con <span class="kw">Dimension</span>. La gran ventaja: recorrer todas las posiciones con un solo bucle <span class="kw">Para</span>.</p>
     <h3>💡 Recuerda</h3>
     <p>Vector de 5 elementos = 5 variables en una. Ideal para notas, temperaturas, sensores o stock.</p>
   </div>
@@ -167,9 +167,9 @@
         </div>
       </div>
 <pre id="cod3"><span class="kw">Algoritmo</span> <span class="fn">PromedioNotas</span>
-	<span class="kw">Definir</span> notas, i, suma <span class="kw">Como</span> Entero
+	<span class="kw">Definir</span> i, suma <span class="kw">Como</span> Entero
 	<span class="kw">Definir</span> mayor, promedio <span class="kw">Como</span> Real
-	<span class="kw">Dimension</span> notas[5]
+	<span class="kw">Dimension</span> notas[6]
 	suma &lt;- 0
 	mayor &lt;- 0
 	<span class="cm">// Carga del vector con validacion incluida</span>
@@ -177,6 +177,9 @@
 		<span class="kw">Repetir</span>
 			<span class="kw">Escribir</span> <span class="str">"Ingrese la nota del alumno "</span>, i, <span class="str">" (1 a 10):"</span>
 			<span class="kw">Leer</span> notas[i]
+			<span class="kw">Si</span> notas[i] &lt; 1 <span class="kw">O</span> notas[i] &gt; 10 <span class="kw">Entonces</span>
+				<span class="kw">Escribir</span> <span class="str">"ERROR: valor fuera de rango. Reintente."</span>
+			<span class="kw">FinSi</span>
 		<span class="kw">Hasta Que</span> notas[i] &gt;= 1 <span class="kw">Y</span> notas[i] &lt;= 10
 		suma &lt;- suma + notas[i]
 		<span class="kw">Si</span> notas[i] &gt; mayor <span class="kw">Entonces</span>
@@ -195,13 +198,13 @@
 <!-- ================= MÓDULO 3 ================= -->
 <section class="tab" id="m3">
   <div class="card theory">
-    <h2>🧩 Módulo 3 — Modularización (SubProcesos)</h2>
-    <p>Modularizar es <b>dividir el programa en piezas pequeñas y reutilizables</b> llamadas subprocesos o funciones. Cada una resuelve UNA tarea concreta (validar, calcular, mostrar).</p>
+    <h2>🧩 Módulo 3 — Modularización (Funciones)</h2>
+    <p>Modularizar es <b>dividir el programa en piezas pequeñas y reutilizables</b> llamadas funciones. Cada una resuelve UNA tarea concreta (validar, calcular, mostrar).</p>
     <h3>✅ Ventajas</h3>
     <ul class="steps">
       <li>El código se lee y corrige más fácil.</li>
       <li>Si validás en 3 lugares, escribís la función UNA vez y la llamás 3 veces.</li>
-      <li><span class="fn">Retornar</span> devuelve el resultado al programa principal.</li>
+      <li>En PSeInt Flexible, la variable de retorno se asigna directamente en el cuerpo; no se usa <span class="kw">Retornar</span>.</li>
     </ul>
   </div>
 
@@ -216,52 +219,49 @@
         </div>
       </div>
 <pre id="cod4"><span class="cm">// Funcion que valida y devuelve una nota correcta</span>
-<span class="kw">SubProceso</span> nota &lt;- <span class="fn">LeerNotaValidada</span>(mensaje)
+<span class="kw">Funcion</span> nota &lt;- <span class="fn">LeerNotaValidada</span>()
 	<span class="kw">Definir</span> nota <span class="kw">Como</span> Entero
 	<span class="kw">Repetir</span>
 		<span class="kw">Escribir</span> <span class="str">"Ingrese nota (1 a 10):"</span>
 		<span class="kw">Leer</span> nota
 	<span class="kw">Hasta Que</span> nota &gt;= 1 <span class="kw">Y</span> nota &lt;= 10
-	<span class="kw">Retornar</span> nota
-<span class="kw">FinSubProceso</span>
+	<span class="cm">// La variable 'nota' ya tiene el valor válido, se devuelve automáticamente</span>
+<span class="kw">FinFuncion</span>
 
-<span class="cm">// Funcion que calcula el promedio de un vector</span>
-<span class="kw">SubProceso</span> prom &lt;- <span class="fn">CalcularPromedio</span>(vector Por Referencia, n)
-	<span class="kw">Definir</span> i, suma <span class="kw">Como</span> Entero
-	suma &lt;- 0
-	<span class="kw">Para</span> i &lt;- 1 <span class="kw">Hasta</span> n <span class="kw">Hacer</span>
-		suma &lt;- suma + vector[i]
-	<span class="kw">FinPara</span>
-	<span class="kw">Retornar</span> suma / n
-<span class="kw">FinSubProceso</span>
+<span class="cm">// Funcion que calcula el promedio de 3 notas</span>
+<span class="kw">Funcion</span> prom &lt;- <span class="fn">CalcularPromedio</span>(a, b, c)
+	<span class="kw">Definir</span> prom <span class="kw">Como</span> Real
+	prom &lt;- (a + b + c) / 3
+	<span class="cm">// La variable 'prom' ya contiene el resultado, se devuelve automáticamente</span>
+<span class="kw">FinFuncion</span>
 
 <span class="kw">Algoritmo</span> <span class="fn">ProgramaPrincipal</span>
-	<span class="kw">Definir</span> notas, i <span class="kw">Como</span> Entero
-	<span class="kw">Definir</span> promedio <span class="kw">Como</span> Real
-	<span class="kw">Dimension</span> notas[3]
-	<span class="kw">Para</span> i &lt;- 1 <span class="kw">Hasta</span> 3 <span class="kw">Hacer</span>
-		notas[i] &lt;- LeerNotaValidada()
-	<span class="kw">FinPara</span>
-	prom &lt;- CalcularPromedio(notas, 3)
-	<span class="kw">Escribir</span> <span class="str">"El promedio es: "</span>, prom
+	<span class="kw">Definir</span> n1, n2, n3 <span class="kw">Como</span> Entero
+	n1 &lt;- 0
+	n2 &lt;- 0
+	n3 &lt;- 0
+	n1 &lt;- LeerNotaValidada()
+	n2 &lt;- LeerNotaValidada()
+	n3 &lt;- LeerNotaValidada()
+	<span class="kw">Escribir</span> <span class="str">"El promedio es: "</span>, CalcularPromedio(n1, n2, n3)
 <span class="kw">FinAlgoritmo</span></pre>
     </div>
-    <p style="margin-top:10px;color:var(--muted);font-size:.82rem">🔧 Fijate cómo el programa principal quedó cortísimo: delega todo en las funciones.</p>
+    <p style="margin-top:10px;color:var(--muted);font-size:.82rem">🔧 Fíjate cómo el programa principal quedó cortísimo: delega todo en las funciones. Se ha eliminado <span class="kw">Retornar</span> para compatibilidad con móviles.</p>
   </div>
 </section>
 
 <!-- ================= MÓDULO 4: DESAFÍO ================= -->
 <section class="tab" id="m4">
   <div class="card challenge">
-    <span class="badge badge-warn">🏆 DESAFÍO INTEGRADOR</span>
+    <span class="badge">🏆 DESAFÍO INTEGRADOR</span>
     <h2>Control de Calidad de Empaquetado</h2>
     <p style="color:#ffe9c2">La empresa <b>"PackSafe S.A."</b> controla el peso (en gramos) de <b>8 cajas</b> de su línea de producción. Una caja es <b>APROBADA</b> si pesa entre <b>480 g y 520 g</b> inclusive. Te contratan como programador para automatizar el control.</p>
 
     <h3>📋 Tu programa debe:</h3>
     <ul class="steps">
       <li><b>1. Validar</b> cada peso ingresado: rechazar valores menores o iguales a 0 (usá <span class="kw">Repetir … Hasta Que</span> en una <b>función</b> llamada <span class="fn">LeerPeso()</span>).</li>
-      <li><b>2. Guardar</b> los 8 pesos en un <b>vector</b> llamado <span class="fn">pesos</span> (usá <span class="kw">Dimension pesos[8]</span>).</li>
-      <li><b>3. Modularizar</b>: crear una función <span class="fn">ContarAprobadas(pesos)</span> que devuelva cuántas cajas cumplen el rango 480–520 g.</li>
+      <li><b>2. Guardar</b> los 8 pesos en un <b>vector</b> llamado <span class="fn">pesos</span> (usá <span class="kw">Dimension pesos[9]</span>).</li>
+      <li><b>3. Modularizar</b>: crear una función <span class="fn">ContarAprobadas()</span> que devuelva cuántas cajas cumplen el rango 480–520 g.</li>
       <li><b>4. Mostrar</b> al final: el promedio de peso general, la cantidad de aprobadas y la cantidad de rechazadas.</li>
       <li><b>5. (Bonus)</b> Informar cuál fue la caja más liviana y cuál la más pesada.</li>
     </ul>
@@ -283,37 +283,34 @@
       <div class="code-head">
         <span>plantilla_desafio.psc</span>
         <div>
-          <button class="btn btn-accent btn-small" onclick="copiarCodigo('cod4')">📋 Copiar</button>
-          <button class="btn btn-outline btn-small" onclick="descargarPSC('cod4','plantilla_desafio')">💾 .psc</button>
+          <button class="btn btn-accent btn-small" onclick="copiarCodigo('cod5')">📋 Copiar</button>
+          <button class="btn btn-outline btn-small" onclick="descargarPSC('cod5','plantilla_desafio')">💾 .psc</button>
         </div>
       </div>
-<pre id="cod4"><span class="cm">// DESAFIO INTEGRADOR - Control de Calidad de Empaquetado</span>
+<pre id="cod5"><span class="cm">// DESAFIO INTEGRADOR - Control de Calidad de Empaquetado</span>
 <span class="cm">// Completa las partes marcadas con TODO</span>
 
-<span class="kw">SubProceso</span> peso &lt;- <span class="fn">LeerPeso</span>()
+<span class="kw">Funcion</span> peso &lt;- <span class="fn">LeerPeso</span>()
 	<span class="kw">Definir</span> peso <span class="kw">Como</span> Real
 	<span class="kw">Repetir</span>
 		<span class="kw">Escribir</span> <span class="str">"Ingrese peso de la caja en gramos (&gt; 0):"</span>
 		<span class="kw">Leer</span> peso
 	<span class="kw">Hasta Que</span> peso &gt; 0
-	<span class="kw">Retornar</span> peso
-<span class="kw">FinSubProceso</span>
-
-<span class="kw">SubProceso</span> cant &lt;- <span class="fn">ContarAprobadas</span>(vector Por Referencia)
-	<span class="cm">// TODO: recorrer el vector y contar cajas entre 480 y 520</span>
-	<span class="kw">Retornar</span> cant
-<span class="kw">FinSubProceso</span>
+	<span class="cm">// La variable 'peso' ya tiene el valor válido, se devuelve automáticamente</span>
+<span class="kw">FinFuncion</span>
 
 <span class="kw">Algoritmo</span> <span class="fn">ControlEmpaquetado</span>
 	<span class="kw">Definir</span> pesos <span class="kw">Como</span> Real
-	<span class="kw">Definir</span> i, aprobadas <span class="kw">Como</span> Entero
-	<span class="kw">Dimension</span> pesos[8]
+	<span class="kw">Definir</span> i, aprobadas, rechazadas <span class="kw">Como</span> Entero
+	<span class="kw">Definir</span> promedio <span class="kw">Como</span> Real
+	<span class="kw">Dimension</span> pesos[9]
+	aprobadas &lt;- 0
 	<span class="cm">// TODO: cargar los 8 pesos llamando a LeerPeso()</span>
-	<span class="cm">// TODO: calcular promedio, aprobadas y rechazadas</span>
-	<span class="cm">// TODO: mostrar resultados</span>
+	<span class="cm">// TODO: contar aprobadas (480 a 520 g) y rechazadas</span>
+	<span class="cm">// TODO: calcular promedio y mostrar resultados</span>
 <span class="kw">FinAlgoritmo</span></pre>
     </div>
-    <p style="margin-top:10px;color:var(--muted);font-size:.82rem">💡 La plantilla es solo una guía: tu solución debe quedar completa y funcionando.</p>
+    <p style="margin-top:10px;color:var(--muted);font-size:.82rem">💡 La plantilla ahora usa <span class="kw">Funcion</span> y no contiene <span class="kw">Retornar</span>, lo que la hace totalmente compatible con la versión móvil.</p>
   </div>
 </section>
 
