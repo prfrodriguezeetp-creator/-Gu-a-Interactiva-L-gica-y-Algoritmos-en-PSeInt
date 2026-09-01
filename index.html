@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Guía Interactiva: Lógica y Algoritmos en PSeInt</title>
+<style>
+  :root{
+    --bg:#0f1220; --panel:#1a1f33; --panel2:#222944; --border:#2e3a5c;
+    --text:#eef1ff; --muted:#9aa5cc; --accent:#6d4aff; --accent2:#00e08f;
+    --warn:#ffb020; --danger:#ff5d73; --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;font-size:16px}
+  header{position:sticky;top:0;z-index:50;background:linear-gradient(160deg,#171c31,#10131f);border-bottom:2px solid var(--accent);padding:16px 14px 12px}
+  header h1{font-size:1.15rem;color:#fff;text-shadow:0 0 12px rgba(109,74,255,.6)}
+  header p{font-size:.85rem;color:var(--muted)}
+  .banner{margin:12px 14px 4px;display:flex;align-items:center;gap:10px;background:rgba(0,224,143,.08);border:1px solid var(--accent2);border-radius:var(--radius);padding:12px 14px}
+  .banner .ico{font-size:1.6rem}
+  .banner b{color:var(--accent2)}
+  .banner small{color:var(--muted);display:block}
+  nav{position:sticky;top:0;z-index:40;display:flex;overflow-x:auto;gap:6px;padding:10px 14px;background:var(--bg);scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
+  nav button{flex:0 0 auto;border:1px solid var(--border);background:var(--panel);color:var(--muted);padding:11px 14px;min-height:46px;border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.2s}
+  nav button.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 0 14px rgba(109,74,255,.45)}
+  main{padding:14px 14px 90px;max-width:760px;margin:0 auto}
+  section.tab{display:none;animation:fade .25s ease}
+  section.tab.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+  .card h2{font-size:1.05rem;color:#fff;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .card h3{font-size:.95rem;color:var(--accent2);margin:12px 0 6px}
+  .card p, .card li{color:#cdd5f5;font-size:.92rem}
+  ul.steps{margin:8px 0 0 18px}
+  ul.steps li{margin-bottom:6px}
+  .theory{border-left:4px solid var(--accent);padding-left:12px;margin-bottom:12px}
+  .code-wrap{background:#0b0e1a;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:10px}
+  .code-head{display:flex;justify-content:space-between;align-items:center;background:var(--panel2);padding:8px 12px;border-bottom:1px solid var(--border)}
+  .code-head span{font-size:.78rem;color:var(--muted);font-family:monospace}
+  pre{padding:14px;overflow-x:auto;font-family:'Consolas','Courier New',monospace;font-size:.83rem;line-height:1.5;color:#dbe4ff}
+  .kw{color:#c792ff;font-weight:bold}
+  .fn{color:#82aaff}
+  .str{color:#c3e88d}
+  .cm{color:#5c6a99;font-style:italic}
+  .num{color:#f78c6c}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 18px;border:none;border-radius:12px;font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s}
+  .btn:active{transform:scale(.97)}
+  .btn-accent{background:var(--accent);color:#fff;box-shadow:0 0 14px rgba(109,74,255,.4)}
+  .btn-green{background:var(--accent2);color:#06281c}
+  .btn-outline{background:transparent;color:var(--accent2);border:1.5px solid var(--accent2)}
+  .btn-small{min-height:38px;padding:8px 12px;font-size:.78rem;border-radius:9px}
+  .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .btn-row .btn{flex:1}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);background:var(--accent2);color:#06281c;padding:12px 20px;border-radius:12px;font-weight:700;font-size:.85rem;opacity:0;transition:.3s;z-index:99;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.5);max-width:90%;text-align:center}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .challenge{border:2px solid var(--warn);box-shadow:0 0 20px rgba(255,176,32,.15)}
+  .challenge h2{color:var(--warn)}
+  .badge{display:inline-block;background:rgba(255,176,32,.15);color:var(--warn);border:1px solid var(--warn);border-radius:8px;font-size:.72rem;font-weight:700;padding:4px 10px;margin-bottom:8px;letter-spacing:.5px}
+  .divider{height:1px;background:var(--border);margin:14px 0}
+  table.tip{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:8px}
+  table.tip td{border:1px solid var(--border);padding:8px}
+  footer{text-align:center;color:var(--muted);font-size:.75rem;padding:20px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🧠 Guía Interactiva: Lógica y Algoritmos en PSeInt</h1>
+  <p>Primer Año — Introducción al Software</p>
+</header>
+
+<div class="banner">
+  <span class="ico">📲</span>
+  <div>
+    <b>¡Recuerda abrir PSeInt para Android!</b>
+    <small>Ten la app lista en tu teléfono para probar cada ejercicio. Descárgala desde pseint.sourceforge.net o Play Store.</small>
+  </div>
+</div>
+
+<nav id="tabs">
+  <button class="active" data-tab="m1">📘 Validación</button>
+  <button data-tab="m2">📊 Vectores</button>
+  <button data-tab="m3">🧩 Modularización</button>
+  <button data-tab="m4">🏆 Desafío</button>
+</nav>
+
+<main>
+
+<!-- ================= MÓDULO 1 ================= -->
+<section class="tab active" id="m1">
+  <div class="card theory">
+    <h2>📘 Módulo 1 — Validación de Entradas</h2>
+    <p>Validar significa <b>comprobar que los datos que ingresa el usuario sean correctos</b> antes de usarlos. Nunca confíes en lo que escribe el usuario: puede escribir letras donde van números, edades negativas o notas fuera de rango.</p>
+    <p>La técnica central es el bucle <span class="kw">Repetir … Hasta Que</span>: repetimos la lectura del dato <b>mientras sea inválido</b>, y solo salimos cuando cumple la condición.</p>
+    <h3>💡 Regla práctica</h3>
+    <p>Define siempre el <b>rango válido</b> antes de programar. Ejemplo: una nota válida va de 1 a 10, una edad de 1 a 120.</p>
+  </div>
+
+  <div class="card">
+    <h3>Ejercicio: validar una nota entre 1 y 10</h3>
+    <div class="code-wrap">
+      <div class="code-head">
+        <span>validar_nota.psc</span>
+        <div>
+          <button class="btn btn-accent btn-small" onclick="copiarCodigo('cod1')">📋 Copiar</button>
+          <button class="btn btn-outline btn-small" onclick="descargarPSC('cod1','validar_nota')">💾 .psc</button>
+        </div>
+      </div>
+<pre id="cod1"><span class="cm">// Validacion de entrada: nota entre 1 y 10</span>
+<span class="kw">Algoritmo</span> <span class="fn">ValidarNota</span>
+	<span class="kw">Definir</span> nota <span class="kw">Como</span> Entero
+	<span class="kw">Repetir</span>
+		<span class="kw">Escribir</span> <span class="str">"Ingrese una nota entre 1 y 10:"</span>
+		<span class="kw">Leer</span> nota
+		<span class="kw">Si</span> nota &lt; 1 <span class="kw">O</span> nota &gt; 10 <span class="kw">Entonces</span>
+			<span class="kw">Escribir</span> <span class="str">"ERROR: valor fuera de rango. Reintente."</span>
+		<span class="kw">FinSi</span>
+	<span class="kw">Hasta Que</span> nota &gt;= 1 <span class="kw">Y</span> nota &lt;= 10
+	<span class="kw">Escribir</span> <span class="str">"Nota aceptada: "</span>, nota
+<span class="kw">FinAlgoritmo</span></pre>
+    </div>
+    <p style="margin-top:10px;color:var(--muted);font-size:.82rem">🔧 Pruébalo: escribí 99 y luego 7. Observa cómo el programa no avanza hasta recibir un dato válido.</p>
+  </div>
+
+  <div class="card">
+    <h3>Ejercicio extra: validar que NO haya división por cero</h3>
+    <div class="code-wrap">
+      <div class="code-head">
+        <span>validar_divisor.psc</span>
+        <div>
+          <button class="btn btn-accent btn-small" onclick="copiarCodigo('cod2')">📋 Copiar</button>
+          <button class="btn btn-outline btn-small" onclick="descargarPSC('cod2','validar_divisor')">💾 .psc</button>
+        </div>
+      </div>
+<pre id="cod2"><span class="kw">Algoritmo</span> <span class="fn">ValidarDivisor</span>
+	<span class="kw">Definir</span> a, b <span class="kw">Como</span> Real
+	<span class="kw">Escribir</span> <span class="str">"Ingrese dividendo:"</span>
+	<span class="kw">Leer</span> a
+	<span class="kw">Repetir</span>
+		<span class="kw">Escribir</span> <span class="str">"Ingrese divisor (distinto de 0):"</span>
+		<span class="kw">Leer</span> b
+	<span class="kw">Hasta Que</span> b &lt;&gt; 0
+	<span class="kw">Escribir</span> <span class="str">"Resultado: "</span>, a / b
+<span class="kw">FinAlgoritmo</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MÓDULO 2 ================= -->
+<section class="tab" id="m2">
+  <div class="card theory">
+    <h2>📊 Módulo 2 — Vectores (Arreglos)</h2>
+    <p>Un <b>vector</b> es una caja con varios compartimentos numerados que guardan datos del mismo tipo bajo un solo nombre. Se accede a cada posición con un índice: <span class="fn">vector[1]</span>, <span class="fn">vector[2]</span>, etc.</p>
+    <p>En PSeInt se declaran con <span class="kw">Dimension</span>. Los índices comienzan en <b>1</b>. La gran ventaja: recorrer todas las posiciones con un solo bucle <span class="kw">Para</span>.</p>
+    <h3>💡 Recuerda</h3>
+    <p>Vector de 5 elementos = 5 variables en una. Ideal para notas, temperaturas, sensores o stock.</p>
+  </div>
+
+  <div class="card">
+    <h3>Ejercicio: cargar 5 notas, promedio y mayor nota</h3>
+    <div class="code-wrap">
+      <div class="code-head">
+        <span>vectores_notas.psc</span>
+        <div>
+          <button class="btn btn-accent btn-small" onclick="copiarCodigo('cod3')">📋 Copiar</button>
+          <button class="btn btn-outline btn-small" onclick="descargarPSC('cod3','vectores_notas')">💾 .psc</button>
+        </div>
+      </div>
+<pre id="cod3"><span class="kw">Algoritmo</span> <span class="fn">PromedioNotas</span>
+	<span class="kw">Definir</span> notas, i, suma <span class="kw">Como</span> Entero
+	<span class="kw">Definir</span> mayor, promedio <span class="kw">Como</span> Real
+	<span class="kw">Dimension</span> notas[5]
+	suma &lt;- 0
+	mayor &lt;- 0
+	<span class="cm">// Carga del vector con validacion incluida</span>
+	<span class="kw">Para</span> i &lt;- 1 <span class="kw">Hasta</span> 5 <span class="kw">Hacer</span>
+		<span class="kw">Repetir</span>
+			<span class="kw">Escribir</span> <span class="str">"Ingrese la nota del alumno "</span>, i, <span class="str">" (1 a 10):"</span>
+			<span class="kw">Leer</span> notas[i]
+		<span class="kw">Hasta Que</span> notas[i] &gt;= 1 <span class="kw">Y</span> notas[i] &lt;= 10
+		suma &lt;- suma + notas[i]
+		<span class="kw">Si</span> notas[i] &gt; mayor <span class="kw">Entonces</span>
+			mayor &lt;- notas[i]
+		<span class="kw">FinSi</span>
+	<span class="kw">FinPara</span>
+	promedio &lt;- suma / 5
+	<span class="kw">Escribir</span> <span class="str">"Promedio del curso: "</span>, promedio
+	<span class="kw">Escribir</span> <span class="str">"Mayor nota: "</span>, mayor
+<span class="kw">FinAlgoritmo</span></pre>
+    </div>
+    <p style="margin-top:10px;color:var(--muted);font-size:.82rem">🔧 Observa cómo se combinan Vectores + Validación dentro del mismo bucle <span class="kw">Para</span>.</p>
+  </div>
+</section>
+
+<!-- ================= MÓDULO 3 ================= -->
+<section class="tab" id="m3">
+  <div class="card theory">
+    <h2>🧩 Módulo 3 — Modularización (SubProcesos)</h2>
+    <p>Modularizar es <b>dividir el programa en piezas pequeñas y reutilizables</b> llamadas subprocesos o funciones. Cada una resuelve UNA tarea concreta (validar, calcular, mostrar).</p>
+    <h3>✅ Ventajas</h3>
+    <ul class="steps">
+      <li>El código se lee y corrige más fácil.</li>
+      <li>Si validás en 3 lugares, escribís la función UNA vez y la llamás 3 veces.</li>
+      <li><span class="fn">Retornar</span> devuelve el resultado al programa principal.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Ejercicio: funciones de validación y cálculo</h3>
+    <div class="code-wrap">
+      <div class="code-head">
+        <span>modularizado.psc</span>
+        <div>
+          <button class="btn btn-accent btn-small" onclick="copiarCodigo('cod4')">📋 Copiar</button>
+          <button class="btn btn-outline btn-small" onclick="descargarPSC('cod4','modularizacion')">💾 .psc</button>
+        </div>
+      </div>
+<pre id="cod4"><span class="cm">// Funcion que valida y devuelve una nota correcta</span>
+<span class="kw">SubProceso</span> nota &lt;- <span class="fn">LeerNotaValidada</span>(mensaje)
+	<span class="kw">Definir</span> nota <span class="kw">Como</span> Entero
+	<span class="kw">Repetir</span>
+		<span class="kw">Escribir</span> <span class="str">"Ingrese nota (1 a 10):"</span>
+		<span class="kw">Leer</span> nota
+	<span class="kw">Hasta Que</span> nota &gt;= 1 <span class="kw">Y</span> nota &lt;= 10
+	<span class="kw">Retornar</span> nota
+<span class="kw">FinSubProceso</span>
+
+<span class="cm">// Funcion que calcula el promedio de un vector</span>
+<span class="kw">SubProceso</span> prom &lt;- <span class="fn">CalcularPromedio</span>(vector Por Referencia, n)
+	<span class="kw">Definir</span> i, suma <span class="kw">Como</span> Entero
+	suma &lt;- 0
+	<span class="kw">Para</span> i &lt;- 1 <span class="kw">Hasta</span> n <span class="kw">Hacer</span>
+		suma &lt;- suma + vector[i]
+	<span class="kw">FinPara</span>
+	<span class="kw">Retornar</span> suma / n
+<span class="kw">FinSubProceso</span>
+
+<span class="kw">Algoritmo</span> <span class="fn">ProgramaPrincipal</span>
+	<span class="kw">Definir</span> notas, i <span class="kw">Como</span> Entero
+	<span class="kw">Definir</span> promedio <span class="kw">Como</span> Real
+	<span class="kw">Dimension</span> notas[3]
+	<span class="kw">Para</span> i &lt;- 1 <span class="kw">Hasta</span> 3 <span class="kw">Hacer</span>
+		notas[i] &lt;- LeerNotaValidada()
+	<span class="kw">FinPara</span>
+	prom &lt;- CalcularPromedio(notas, 3)
+	<span class="kw">Escribir</span> <span class="str">"El promedio es: "</span>, prom
+<span class="kw">FinAlgoritmo</span></pre>
+    </div>
+    <p style="margin-top:10px;color:var(--muted);font-size:.82rem">🔧 Fijate cómo el programa principal quedó cortísimo: delega todo en las funciones.</p>
+  </div>
+</section>
+
+<!-- ================= MÓDULO 4: DESAFÍO ================= -->
+<section class="tab" id="m4">
+  <div class="card challenge">
+    <span class="badge badge-warn">🏆 DESAFÍO INTEGRADOR</span>
+    <h2>Control de Calidad de Empaquetado</h2>
+    <p style="color:#ffe9c2">La empresa <b>"PackSafe S.A."</b> controla el peso (en gramos) de <b>8 cajas</b> de su línea de producción. Una caja es <b>APROBADA</b> si pesa entre <b>480 g y 520 g</b> inclusive. Te contratan como programador para automatizar el control.</p>
+
+    <h3>📋 Tu programa debe:</h3>
+    <ul class="steps">
+      <li><b>1. Validar</b> cada peso ingresado: rechazar valores menores o iguales a 0 (usá <span class="kw">Repetir … Hasta Que</span> en una <b>función</b> llamada <span class="fn">LeerPeso()</span>).</li>
+      <li><b>2. Guardar</b> los 8 pesos en un <b>vector</b> llamado <span class="fn">pesos</span> (usá <span class="kw">Dimension pesos[8]</span>).</li>
+      <li><b>3. Modularizar</b>: crear una función <span class="fn">ContarAprobadas(pesos)</span> que devuelva cuántas cajas cumplen el rango 480–520 g.</li>
+      <li><b>4. Mostrar</b> al final: el promedio de peso general, la cantidad de aprobadas y la cantidad de rechazadas.</li>
+      <li><b>5. (Bonus)</b> Informar cuál fue la caja más liviana y cuál la más pesada.</li>
+    </ul>
+
+    <h3>📤 Pasos para entregar en Google Classroom:</h3>
+    <ul class="steps">
+      <li><b>Paso 1:</b> Abrí PSeInt para Android y escribí (o copiá y adaptá) tu solución.</li>
+      <li><b>Paso 2:</b> Ejecutá el programa y verificá que funcione sin errores, probando también valores inválidos (por ejemplo, un peso negativo: debe pedirlo de nuevo).</li>
+      <li><b>Paso 3:</b> Guardá tu archivo <b>.psc</b> (Menú → Archivo → Guardar) o tomá una <b>captura de pantalla</b> de la ejecución exitosa.</li>
+      <li><b>Paso 4:</b> Entrá a Google Classroom → materia Software/Programación → tarea "Desafío Integrador" → adjuntá el archivo y/o la captura → entregá. ✅</li>
+    </ul>
+
+    <p style="margin-top:10px;color:var(--warn);font-size:.85rem"><b>⚠️ Importante:</b> el desafío integra los 3 módulos. Si algo no funciona, volvé a revisar la teoría de las pestañas anteriores antes de consultar al profesor.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧪 Plantilla de ayuda (opcional) — punto de partida</h3>
+    <div class="code-wrap">
+      <div class="code-head">
+        <span>plantilla_desafio.psc</span>
+        <div>
+          <button class="btn btn-accent btn-small" onclick="copiarCodigo('cod4')">📋 Copiar</button>
+          <button class="btn btn-outline btn-small" onclick="descargarPSC('cod4','plantilla_desafio')">💾 .psc</button>
+        </div>
+      </div>
+<pre id="cod4"><span class="cm">// DESAFIO INTEGRADOR - Control de Calidad de Empaquetado</span>
+<span class="cm">// Completa las partes marcadas con TODO</span>
+
+<span class="kw">SubProceso</span> peso &lt;- <span class="fn">LeerPeso</span>()
+	<span class="kw">Definir</span> peso <span class="kw">Como</span> Real
+	<span class="kw">Repetir</span>
+		<span class="kw">Escribir</span> <span class="str">"Ingrese peso de la caja en gramos (&gt; 0):"</span>
+		<span class="kw">Leer</span> peso
+	<span class="kw">Hasta Que</span> peso &gt; 0
+	<span class="kw">Retornar</span> peso
+<span class="kw">FinSubProceso</span>
+
+<span class="kw">SubProceso</span> cant &lt;- <span class="fn">ContarAprobadas</span>(vector Por Referencia)
+	<span class="cm">// TODO: recorrer el vector y contar cajas entre 480 y 520</span>
+	<span class="kw">Retornar</span> cant
+<span class="kw">FinSubProceso</span>
+
+<span class="kw">Algoritmo</span> <span class="fn">ControlEmpaquetado</span>
+	<span class="kw">Definir</span> pesos <span class="kw">Como</span> Real
+	<span class="kw">Definir</span> i, aprobadas <span class="kw">Como</span> Entero
+	<span class="kw">Dimension</span> pesos[8]
+	<span class="cm">// TODO: cargar los 8 pesos llamando a LeerPeso()</span>
+	<span class="cm">// TODO: calcular promedio, aprobadas y rechazadas</span>
+	<span class="cm">// TODO: mostrar resultados</span>
+<span class="kw">FinAlgoritmo</span></pre>
+    </div>
+    <p style="margin-top:10px;color:var(--muted);font-size:.82rem">💡 La plantilla es solo una guía: tu solución debe quedar completa y funcionando.</p>
+  </div>
+</section>
+
+<footer>SIMULADOR EDUCATIVO · PSeInt · Guía generada para uso offline</footer>
+</main>
+
+<div class="toast" id="toast">✔ Copiado al portapapeles</div>
+
+<script>
+// ---------- Navegación por pestañas ----------
+document.querySelectorAll('#tabs button').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('#tabs button').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    document.querySelectorAll('section.tab').forEach(function(sec){ sec.classList.remove('active'); });
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+// ---------- Toast de aviso ----------
+var toastTimer;
+function mostrarToast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.opacity = '1';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(-50%) translateY(80px)';
+  }, 2200);
+}
+
+// ---------- Copiar código al portapapeles ----------
+function copiarCodigo(id){
+  var texto = document.getElementById(id).innerText;
+  function ok(){
+    mostrarToast('✔ ¡Código copiado! Pegalo en PSeInt Android');
+  }
+  function fallback(){
+    var ta = document.createElement('textarea');
+    ta.value = texto;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      ok();
+    } catch(e) {
+      mostrarToast('⚠ Mantén presionado el código y cópialo manualmente');
+    }
+    document.body.removeChild(ta);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(texto).then(ok).catch(fallback);
+  } else {
+    fallback();
+  }
+}
+
+// ---------- Descargar archivo .psc ----------
+function descargarPSC(id, nombre){
+  var texto = document.getElementById(id).innerText;
+  var blob = new Blob([texto], {type:'text/plain;charset=utf-8'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = nombre + '.psc';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  mostrarToast('💾 Descargando ' + nombre + '.psc …');
+}
+</script>
+</body>
+</html>
